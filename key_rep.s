@@ -2,6 +2,7 @@
 *   by kani7
 *   GPL2.0
 *   2021-05-15 多分動く版
+*	2021-05-19 LED設定も反映するようにした
 
 	.include	DOSCALL.MAC
 	.include	IOCSCALL.MAC
@@ -9,6 +10,7 @@
 FIRST_KY	equ $00ed_003a		* キーリピート開始までの待ち時間
 NEXT_KEY	equ $00ed_003b		* キーリピート間隔
 
+_LEDSET		equ $07
 _KEYDLY		equ $08
 _KEYREP		equ $09
 
@@ -26,6 +28,8 @@ start:
 	IOCS	_B_BPEEK
 	move.l	D0,D1
 	IOCS	_KEYREP
+
+	IOCS	_LEDSET
 
 	pea.l	help_msg(PC)
 	DOS	_PRINT
